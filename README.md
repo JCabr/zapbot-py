@@ -1,11 +1,8 @@
 <p align="left">
-  <a title="License"><img src="https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square"></a>
-  <a title="Forks"><img src="https://img.shields.io/github/forks/JCabr/zapbot-py.svg?style=flat-square"></a>
-  <a title="Stars"><img src="https://img.shields.io/github/stars/JCabr/zapbot-py.svg?style=flat-square"></a>
-  <a title="Issues"><img src="https://img.shields.io/github/issues/JCabr/zapbot-py.svg?style=flat-square"></a>
+![License](https://img.shields.io/badge/License-MIT-blue.svg?style=flat-square)
 </p>
 <p align="center">
-  <a title="ZapBotLogo"> <img src="https://i.imgur.com/uyYlhIX.png" width="400"/></a>
+  ![ZapBotLogo](https://i.imgur.com/uyYlhIX.png)
 </p>
 <p align="center">
   <a title="PythonVersion" href="https://www.python.org/downloads/release/python-362/"><img src="https://img.shields.io/badge/Python-3.6.2-blue.svg?style=flat-square"></a>
