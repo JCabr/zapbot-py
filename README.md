@@ -2,7 +2,7 @@
 
 ![ZapBotLogo](https://i.imgur.com/uyYlhIX.png)
 
-[![PythonVersion](https://img.shields.io/badge/Python-3.6.2-blue.svg?style=flat-square)](https://www.python.org/downloads/release/python-362)
+[![PythonVersion](https://img.shields.io/badge/Python-3.5.0-blue.svg?style=flat-square)](https://www.python.org/downloads/release/python-350/)
 [![DiscordPyVersion](https://img.shields.io/badge/Discord.py-0.16.12-738bd7.svg?style=flat-square)](https://github.com/Rapptz/discord.py)
 ![FrameworkVersion](https://img.shields.io/badge/ZAP%20Framework-0.3.0a-23272A.svg?style=flat-square&logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFoAAABZCAMAAACJ4sOeAAAADFBMVEUAAAAjJyr4%2BfkkKCufxc3OAAAAAXRSTlMAQObYZgAAAQJJREFUeAHt2EEKwzAQxdCovf%2Bdu9SqQ0M0kEB1gGcwGMw%2FzgTHUgB7MuzJsCdDL1svWys%2F0mbPZs9mzcasl61HrZetl62XrZdtRdYOuj%2F9WqLfYBbQcJIml6XJZWlyWZpcliaXpallaYhl6dHmKk0qSw82BU0mSw82FU0iSw82JU0kS2PK1DTKOU3ywR0IYlqDLVo7p79fFBfzzJJWloloZZ2AVtZuaGWraGWraGWraEVr6B82oErWlo5kbelGNqQj2aQr2aQr2aQr2aQr2aQr2aRD2S4Af%2FpOK04vWy9bL1sv24Qqp%2FZRxOPfjnTVIr1q97L1svWy9bIp9yn3Kfedkz%2Bz1g27UbBJ0gAAAABJRU5ErkJggg%3D%3D)
 
