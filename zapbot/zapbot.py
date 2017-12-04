@@ -149,3 +149,12 @@ class ZapBot(discord.Client):
 
             print(command_stack)
             print(command_args)
+
+    # Override of the original Client.run() method that can accept a token or no arguments.
+    # If there are no arguments, then the bot will use the token given upon being built, if any.
+    def run(self, token: str = None, *args, **kwargs):
+
+        if not token:
+            super().run(self.token, *args, **kwargs)
+        else:
+            super().run(token, *args, **kwargs)
