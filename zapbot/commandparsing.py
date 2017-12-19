@@ -2,6 +2,7 @@
 from ._custom_types.stack import Stack
 from ._custom_types.queue import Queue
 from .authorinfo import AuthorInfo
+from .context import Context
 from .command import Command
 import inspect
 from enum import Enum, unique
@@ -118,17 +119,17 @@ class CommandParser:
 
         if type_to_check is _CommandParamType.BOT:
 
-            if name.lower() in self.__param_keywords["BOT"]:
+            if name.lower() in self.__param_keywords["BOT"] or param_spec.annotation is type(self.bot):
                 return True
 
         elif type_to_check is _CommandParamType.CONTEXT:
 
-            if name.lower() in self.__param_keywords["CTX"]:
+            if name.lower() in self.__param_keywords["CTX"] or param_spec.annotation is Context:
                 return True
 
         elif type_to_check is _CommandParamType.AUTHOR:
 
-            if name.lower() in self.__param_keywords["AUTHOR"]:
+            if name.lower() in self.__param_keywords["AUTHOR"] or param_spec.annotation is AuthorInfo:
                 return True
 
     def __determine_param_queue(self, arg_spec: inspect.Signature):
@@ -136,6 +137,7 @@ class CommandParser:
         arg_names = arg_spec.parameters
         param_queue = Queue()
 
+        # TODO: Potentially simplify parameter-typing process and/or make it more efficient.
         for (name, param) in arg_names.items():
 
             # Parameter is requesting access to the bot
