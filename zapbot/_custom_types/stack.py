@@ -1,8 +1,8 @@
 
 class Stack:
 
-    def __init__(self):
-        self.__storage = []
+    def __init__(self, iterable_list = []):
+        self.__storage = iterable_list
 
     def __str__(self):
         return "\n\n".join(element.__str__() for element in self.__storage) if self.__storage else None.__str__()
@@ -12,6 +12,7 @@ class Stack:
 
     def push(self, data):
         self.__storage.append(data)
+        return self
 
     def pop(self):
         return self.__storage.pop()
@@ -20,7 +21,11 @@ class Stack:
         return self.__storage[-1]
 
     def reverse(self):
-        return self.__storage[::-1]
+        self.__storage = self.__storage[::-1]
+        return self
+
+    def reversed(self):
+        return Stack(self.__storage[::-1])
 
     def to_list(self):
         return self.__storage
