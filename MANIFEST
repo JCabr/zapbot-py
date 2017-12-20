@@ -2,8 +2,13 @@
 setup.cfg
 setup.py
 zapbot\__init__.py
+zapbot\authorinfo.py
 zapbot\command.py
 zapbot\commandparsing.py
+zapbot\context.py
 zapbot\exceptions.py
+zapbot\queue.py
+zapbot\serverinfo.py
+zapbot\stack.py
 zapbot\zapbot.py
 zapbot\zapformat.py

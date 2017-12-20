@@ -9,7 +9,7 @@ setup\
     author="J Cabr",
     author_email="ccabral6895997@outlook.com",
     url="https://github.com/JCabr/zapbot-py",   # url to github repo
-    download_url="https://github.com/JCabr/zapbot-py/archive/0.3alpha.tar.gz",
+    download_url="https://github.com/JCabr/zapbot-py/archive/0.3.1.tar.gz",
     keywords=["discord", "bot", "discord bot", "discord framework"],
     classifiers=[],
 )
