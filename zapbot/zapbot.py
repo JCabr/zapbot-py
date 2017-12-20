@@ -64,7 +64,7 @@ class ZapBot(discord.Client):
 
         # TODO: load in bot data from config file.
 
-        self.owner = "186898416415014912"
+        self.owner = ""
 
         # NOTE: Change this when updating bot to read from config
         self.token = token
@@ -187,8 +187,6 @@ class ZapBot(discord.Client):
         return ZapBot.get_current_message().content
 
     async def process_commands(self, message: discord.Message):
-
-        if message.author.id != self.owner: return
 
         _internal_channel = message.channel
         _internal_author = message.author
