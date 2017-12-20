@@ -1,12 +1,13 @@
 # from .zapbot import ZapBot
-import discord
 import inspect
 from enum import Enum, unique
 
-from .special_param_data.authorinfo import AuthorInfo
-from .special_param_data.serverinfo import ServerInfo
-from .special_param_data.context import Context
-from ._custom_types.queue import Queue
+import discord
+
+from .authorinfo import AuthorInfo
+from .context import Context
+from .queue import Queue
+from .serverinfo import ServerInfo
 from .command import Command
 
 
