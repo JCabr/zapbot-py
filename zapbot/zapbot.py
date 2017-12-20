@@ -87,14 +87,18 @@ class ZapBot(discord.Client):
         # Special bot codes
         self.signals = BotSignals
 
-    async def __help_cmd(self, message: discord.Message, args=None):
+        # Add help command
+        help_command = Command(name="help", func=self.__help_cmd)
+        self.commands.add(help_command)
+
+    async def __help_cmd(self, message: discord.Message, *args):
 
         help_content = ""
 
         for cmd in self.commands:
-            help_content += "`{0}`:\n\t{1}\n".format(cmd.name, cmd.desc)
+            help_content += "`{0}`:\n\t{1}\n".format(cmd.name, cmd.desc) if cmd.desc else "`{0}`\n\n".format(cmd.name)
 
-        await self.say(message.channel, help_content)
+        await self.say(help_content)
 
     async def say(self, destination, content=None, *, tts=False, embed=None):
 
@@ -219,6 +223,8 @@ class ZapBot(discord.Client):
 
                     current_run_command = command_queue.dequeue()  # type: Command
                     current_command_args = command_arg_lists.pop(0)
+
+                    _internal_current_command = current_run_command
 
                     current_command_result = await current_run_command.func(*current_command_args)
 

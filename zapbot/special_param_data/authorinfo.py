@@ -5,7 +5,7 @@ import discord
 # Subclass of discord.User, as the author being discord.Member is not guaranteed.
 # NOTE: might just do away with AuthorInfo, since it doesn't do much meaningful stuff compared
 # NOTE: to a normal discord.Member object.
-class AuthorInfo(discord.User):
+class AuthorInfo(discord.Member):
 
     def __init__(self, message: discord.Message):
 

@@ -5,4 +5,4 @@ class Context:
 
     def __init__(self, message: discord.Message):
 
-        pass
+        self.message = message

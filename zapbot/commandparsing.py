@@ -1,11 +1,13 @@
 # from .zapbot import ZapBot
-from ._custom_types.stack import Stack
-from ._custom_types.queue import Queue
-from .authorinfo import AuthorInfo
-from .context import Context
-from .command import Command
+import discord
 import inspect
 from enum import Enum, unique
+
+from .special_param_data.authorinfo import AuthorInfo
+from .special_param_data.serverinfo import ServerInfo
+from .special_param_data.context import Context
+from ._custom_types.queue import Queue
+from .command import Command
 
 
 @unique
@@ -14,8 +16,9 @@ class _CommandParamType(Enum):
     DEFAULT = 0
     BOT = 1
     CONTEXT = 2
-    AUTHOR = 3
-    SERVER = 4
+    MESSAGE = 3
+    AUTHOR = 4
+    SERVER = 5
 
 class CommandParser:
 
@@ -25,10 +28,11 @@ class CommandParser:
 
         self.__param_keywords = \
             {
-                "BOT": {"bot", "bot_info", "botinfo"},
-                "CTX": ["context", "ctx", "contx"],
-                "AUTHOR": ["author", "author_info", "authorinfo"],
-                "SERVER": ["server", "server_info", "serverinfo"]
+                "BOT": {"bot", "zapbot"},
+                "CTX": {"context", "ctx", "contx"},
+                "MESSAGE": {"message", "msg"},
+                "AUTHOR": {"author", "author_info", "authorinfo"},
+                "SERVER": {"server", "server_info", "serverinfo"}
             }
 
     def determine_prefix(self, content: str):
@@ -80,6 +84,8 @@ class CommandParser:
         command_queue_iter = commands.iter(0)
         command_param_lists = []
 
+        context = Context(message)
+
         while not command_queue_iter.is_empty():
 
             command = command_queue_iter.dequeue()  # type: Command
@@ -96,9 +102,13 @@ class CommandParser:
                 if param_type is _CommandParamType.BOT:
                     param_list.append(self.bot)
                 elif param_type is _CommandParamType.CONTEXT:
+                    param_list.append(context)
+                elif param_type is _CommandParamType.MESSAGE:
                     param_list.append(message)
                 elif param_type is _CommandParamType.AUTHOR:
                     param_list.append(message.author)               # TODO: Append AuthorInfo object
+                elif param_type is _CommandParamType.SERVER:
+                    param_list.append(message.server)
                 elif args and command_queue_iter.is_empty():
 
                     if param_type is _CommandParamType.VARIADIC_LIST:
@@ -117,20 +127,37 @@ class CommandParser:
 
         # print("name:{0}\tspec:{1}".format(name, param_spec))
 
+        param_name = name.lower()
+        param_type = param_spec.annotation
+
+        # Determines parameter type via name or type annotation (allowing for any name, if wanted).
         if type_to_check is _CommandParamType.BOT:
 
-            if name.lower() in self.__param_keywords["BOT"] or param_spec.annotation is type(self.bot):
+            if param_name in self.__param_keywords["BOT"] or param_type is type(self.bot):
                 return True
 
         elif type_to_check is _CommandParamType.CONTEXT:
 
-            if name.lower() in self.__param_keywords["CTX"] or param_spec.annotation is Context:
+            if param_name in self.__param_keywords["CTX"] or param_type is Context:
+                return True
+
+        elif type_to_check is _CommandParamType.MESSAGE:
+
+            if param_name in self.__param_keywords["MESSAGE"] or param_type is discord.Message:
                 return True
 
         elif type_to_check is _CommandParamType.AUTHOR:
 
-            if name.lower() in self.__param_keywords["AUTHOR"] or param_spec.annotation is AuthorInfo:
+            if param_name in self.__param_keywords["AUTHOR"] or param_type is AuthorInfo:
                 return True
+
+        elif type_to_check is _CommandParamType.SERVER:
+
+            if param_name in self.__param_keywords["SERVER"] or param_type is ServerInfo:
+                return True
+
+        else:
+            return False
 
     def __determine_param_queue(self, arg_spec: inspect.Signature):
 
@@ -150,10 +177,18 @@ class CommandParser:
                             _CommandParamType.CONTEXT not in param_queue:
                 param_queue.enqueue(_CommandParamType.CONTEXT)
 
+            elif self.__is_special_param(name, param, _CommandParamType.MESSAGE) and \
+                            _CommandParamType.MESSAGE not in param_queue:
+                param_queue.enqueue(_CommandParamType.MESSAGE)
+
             # Parameter is requesting access to command author info
             elif self.__is_special_param(name, param, _CommandParamType.AUTHOR) and \
                             _CommandParamType.AUTHOR not in param_queue:
                 param_queue.enqueue(_CommandParamType.AUTHOR)
+
+            elif self.__is_special_param(name, param, _CommandParamType.SERVER) and \
+                            _CommandParamType.SERVER not in param_queue:
+                param_queue.enqueue(_CommandParamType.SERVER)
 
             # Parameter is variadic (corresponds to *args parameter)
             elif param.VAR_POSITIONAL:

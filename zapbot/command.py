@@ -206,7 +206,7 @@ def command(name=None, **attrs):
                     func.desc = func.desc.decode("utf-8")
 
             if not func.name:
-                func.name = func.__name__
+                func.name = func.name
 
             if not func.func:
                 func.func = func
@@ -231,15 +231,15 @@ def settings(name: str = None, aliases = None, func=None, desc: str = None, stat
                 static_typing != cmd_func.static_typing else cmd_func.static_typing
 
             return cmd_func
-            """
-            return Command\
-                (name=name if name else cmd_func.name,
-                 aliases=aliases if aliases else cmd_func.aliases,
-                 func=func if func else cmd_func.func,
-                 desc=desc if desc else cmd_func.desc,
-                 static_typing=static_typing if static_typing != cmd_func.static_typing
-                 else cmd_func.static_typing)"""
 
-        return CommandSettings(name=name, func=func if func else cmd_func, desc=desc, static_typing=static_typing)
+        else:
+
+            return CommandSettings \
+            (
+                name=name if name else cmd_func.__name__,
+                func=func if func else cmd_func,
+                desc=desc,
+                static_typing=static_typing
+            )
 
     return decorator
