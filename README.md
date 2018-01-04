@@ -17,7 +17,6 @@ ZapBot is a framework that aims to help automate the basics for setting up the w
 The goal is to have a framework that makes it much easier for you write a bot that works how you want it to, without having to wrestle around with the framework to even have it working how you want it.
 
 ## Features (Planned for v1.0)
----
 
 ### Flexible Configuration
 
