@@ -17,6 +17,7 @@ ZapBot is a framework that aims to help automate the basics for setting up the w
 The goal is to have a framework that makes it much easier for you write a bot that works how you want it to, without having to wrestle around with the framework to even have it working how you want it.
 
 ## Features (Planned for v1.0)
+*Note: The names and structures in any displayed code is subject to change before version 1.0. Until then, the code is just a good approximation for how the library will function at its proper release.*
 
 ### Flexible Configuration
 
@@ -102,20 +103,34 @@ import zapbot
 bot = ZapBot()
 
 @bot.help_command()
-async def user_help_command(bot):
-  # Example help command to show how simple it can be
+async def user_help_command(bot, context):
+  # Example help command to show how simple it can be.
   help_menu = ""
   
-  for module_name, module in bot.modules.items():
-    # Add header for module that is bolded and underlined.
-    help_menu += f"\n**__{module_name}__**\n"
-    # Add list of commands that are in monospaced text and separated by commas.
-    help_menu += ", ".join(f"`{command_name}`" for command_name in module.commands.keys()) + "\n"
+  # Main help menu that is displayed when no commands are specified.
+  if not context.arguments:
+    for module_name, module in bot.modules.items():
+      # Check if module has user-level commands.
+      user_commands = module.commands.only_for("user")
+    
+      if user_commands:
+        # Add header for module that is bolded and underlined.
+        help_menu += f"\n**__{module_name}__**\n"
+        # Add list of commands that are in monospaced text and separated by commas.
+        help_menu += ", ".join(f"`{command_name}`" for command_name in user_commands.keys()) + "\n"
+  # Help menu for specific commands/subcommands.
+  else:
+    help_menu = user_help_subcommand(bot, context)
   
   await bot.embed_reply(title="Help Menu", desc=help_menu, color=bot.bot_color)
+  
+def user_help_subcommand(bot, context):
+  # Function that makes help menu for the specified command.
+  # Could go through the "context.arguments" list to see if the arguments
+  # match up with a command, and then get the description for the command.
     
 @bot.help_command(type="admin")
-async def admin_help_command(bot):
+async def admin_help_command(bot, context):
   # Other help command here
 ```
 (*Note that everything you would want consistently ordered when writing a help command is ordered, either as a list or OrderedDict*)
