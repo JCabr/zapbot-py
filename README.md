@@ -100,7 +100,7 @@ Some example code for writing a simple set of help commands:
 ```py
 import zapbot
 
-bot = ZapBot()
+bot = zapbot.ZapBot()
 
 @bot.help_command()
 async def user_help_command(bot, context):
